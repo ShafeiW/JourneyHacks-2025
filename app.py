@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # ✅ Import CORS
 import json
 import openai
 import os
@@ -12,6 +13,7 @@ load_dotenv()
 openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
+CORS(app)  # ✅ Enable CORS globally
 
 # Apply rate limiting to prevent abuse (10 requests per minute per IP).
 limiter = Limiter(
@@ -54,6 +56,11 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
     **Important:**
     - Use **imperial units** (oz, tsp, cups) instead of milliliters.
     - Return only JSON—do not include any additional text or commentary.
+    - If you are using grenadine, don't use specific volumes, say only "a lining of"
+    - If you are using bitters, don't use specific volumes, say only "a dash of"
+    - If you are using simple syru[], don't use specific volumes, say only "a splash of"
+    - If you are using lemon/lime juice, don't use specific volumes, say only "a squeeze of"
+    - If you are using soda water, tonic or cola don't use specific volumes, say only "top with"
     """
 
     try:

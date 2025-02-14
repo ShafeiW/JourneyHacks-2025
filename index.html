@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>miXologist 🍸</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        button:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+        .response {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>miXologist 🍸</h1>
+
+    <div class="container">
+        <label for="ingredients">Ingredients (comma separated):</label>
+        <input type="text" id="ingredients" placeholder="e.g., Vodka, Orange Juice, Lime">
+
+        <label for="drinkPreference">Drink Preference:</label>
+        <select id="drinkPreference">
+            <option value="any">Any</option>
+            <option value="fruity">Fruity</option>
+            <option value="strong">Strong</option>
+            <option value="sweet">Sweet</option>
+            <option value="sour">Sour</option>
+        </select>
+
+        <label for="flavorPreference">Flavor Preference:</label>
+        <select id="flavorPreference">
+            <option value="balanced">Balanced</option>
+            <option value="bitter">Bitter</option>
+            <option value="sweet">Sweet</option>
+            <option value="sour">Sour</option>
+        </select>
+
+        <button id="generateBtn" onclick="generateCocktail()">Generate Cocktail</button>
+
+        <div id="responseBox" class="response"></div>
+    </div>
+
+    <script>
+        async function generateCocktail() {
+            const ingredientsInput = document.getElementById("ingredients").value.trim();
+            const drinkPreference = document.getElementById("drinkPreference").value;
+            const flavorPreference = document.getElementById("flavorPreference").value;
+            const responseBox = document.getElementById("responseBox");
+            const generateBtn = document.getElementById("generateBtn");
+
+            // Ensure ingredients are provided
+            if (!ingredientsInput) {
+                responseBox.innerHTML = `<p class="error">Please enter at least one ingredient.</p>`;
+                responseBox.style.display = "block";
+                return;
+            }
+
+            const ingredients = ingredientsInput.split(",").map(i => i.trim()); // Convert to array
+
+            responseBox.style.display = "block";
+            responseBox.innerHTML = "Generating cocktail... 🍹";
+            generateBtn.disabled = true; // Disable button during request
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/generate-cocktail", { 
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        ingredients: ingredients,
+                        drink_preference: drinkPreference,
+                        flavor_preference: flavorPreference
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    responseBox.innerHTML = `<p class="error">${data.error}</p>`;
+                } else {
+                    responseBox.innerHTML = `
+                        <h2>${data.name}</h2>
+                        <p><strong>Ingredients:</strong></p>
+                        <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
+                        <p><strong>Preparation:</strong> ${data.preparation}</p>
+                        <p><strong>Glassware:</strong> ${data.glassware}</p>
+                        <p><strong>Garnish:</strong> ${data.garnish}</p>
+                        <p><strong>Backstory:</strong> ${data.backstory}</p>
+                    `;
+                }
+            } catch (error) {
+                responseBox.innerHTML = `<p class="error">Failed to connect to API. Ensure Flask is running.</p>`;
+            }
+
+            generateBtn.disabled = false; // Re-enable button
+        }
+    </script>
+
+</body>
+</html>
