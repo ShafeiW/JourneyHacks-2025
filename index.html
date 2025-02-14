@@ -48,11 +48,13 @@
             cursor: not-allowed;
         }
         .response {
-            background: #e8f5e9;
+            background: #ffffff;
             padding: 15px;
             border-radius: 5px;
             margin-top: 20px;
             text-align: left;
+            font-family: monospace;
+            white-space: pre-wrap;
             display: none;
         }
         .error {
@@ -91,61 +93,47 @@
     </div>
 
     <script>
+        const apiUrl = "http://localhost:5000";  // ✅ Fixed API endpoint
+
         async function generateCocktail() {
-            const ingredientsInput = document.getElementById("ingredients").value.trim();
-            const drinkPreference = document.getElementById("drinkPreference").value;
-            const flavorPreference = document.getElementById("flavorPreference").value;
             const responseBox = document.getElementById("responseBox");
             const generateBtn = document.getElementById("generateBtn");
-
-            // Ensure ingredients are provided
-            if (!ingredientsInput) {
-                responseBox.innerHTML = `<p class="error">Please enter at least one ingredient.</p>`;
-                responseBox.style.display = "block";
-                return;
-            }
-
-            const ingredients = ingredientsInput.split(",").map(i => i.trim()); // Convert to array
-
-            responseBox.style.display = "block";
             responseBox.innerHTML = "Generating cocktail... 🍹";
-            generateBtn.disabled = true; // Disable button during request
+            responseBox.style.display = "block";
+            generateBtn.disabled = true;
 
             try {
-                const response = await fetch("http://127.0.0.1:5000/generate-cocktail", { 
+                const response = await fetch("http://localhost:5000/generate-cocktail", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        ingredients: ingredients,
-                        drink_preference: drinkPreference,
-                        flavor_preference: flavorPreference
+                        ingredients: document.getElementById("ingredients").value.split(",").map(i => i.trim()),
+                        drink_preference: document.getElementById("drinkPreference").value,
+                        flavor_preference: document.getElementById("flavorPreference").value
                     })
                 });
-
-                if (!response.ok) {
-                    throw new Error(`Server returned ${response.status}`);
-                }
 
                 const data = await response.json();
 
                 if (data.error) {
                     responseBox.innerHTML = `<p class="error">${data.error}</p>`;
                 } else {
+                    // Format the JSON response into recipe-style text
                     responseBox.innerHTML = `
-                        <h2>${data.name}</h2>
+                        <h2>${data.recipe.name} 🍸</h2>
+                        <p><strong>Glassware:</strong> ${data.recipe.glassware}</p>
                         <p><strong>Ingredients:</strong></p>
-                        <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
-                        <p><strong>Preparation:</strong> ${data.preparation}</p>
-                        <p><strong>Glassware:</strong> ${data.glassware}</p>
-                        <p><strong>Garnish:</strong> ${data.garnish}</p>
-                        <p><strong>Backstory:</strong> ${data.backstory}</p>
+                        <ul>${data.recipe.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
+                        <p><strong>Preparation:</strong> ${data.recipe.preparation}</p>
+                        <p><strong>Garnish:</strong> ${data.recipe.garnish}</p>
+                        <p><strong>Backstory:</strong> ${data.recipe.backstory}</p>
                     `;
                 }
             } catch (error) {
                 responseBox.innerHTML = `<p class="error">Failed to connect to API. Ensure Flask is running.</p>`;
             }
 
-            generateBtn.disabled = false; // Re-enable button
+            generateBtn.disabled = false;
         }
     </script>
 
