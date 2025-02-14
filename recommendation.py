@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import json
 import openai
 import os
@@ -13,7 +14,7 @@ load_dotenv()
 openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
-
+CORS(app, resources={r"/recommend-cocktail-by-mood": {"origins": "*"}})
 # Apply rate limiting (10 requests per minute per IP)
 limiter = Limiter(
     get_remote_address,
