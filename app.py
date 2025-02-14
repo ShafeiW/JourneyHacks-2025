@@ -37,7 +37,7 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
     Saves the output as a JSON file.
     """
     prompt = f"""
-    You are a professional mixologist. Based on the provided inputs, create a unique cocktail recipe.
+    You are a professional mixologist. Based on the provided inputs, create a unique cocktail recipe. DO NOT add any addition ingredients (except water or ice if needed). Only use the provided ingredients.
     
     **Inputs:**
     - Ingredients: {', '.join(ingredients)}
@@ -52,6 +52,7 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
       "glassware": "Highball glass",
       "garnish": "Orange slice",
       "backstory": "Inspired by a summer sunset."
+      "food_pairing": "Pairs well with grilled seafood."
     }}
     """
 
@@ -69,7 +70,7 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
         structured_response = json.loads(raw_response)
 
         # Validate required fields
-        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory"]
+        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory", "food_pairing"]
         for field in required_fields:
             if field not in structured_response:
                 return {"error": f"Missing field in AI response: {field}"}
@@ -130,6 +131,7 @@ def recommend_cocktail_by_mood(mood):
       "glassware": "Recommended glass type.",
       "garnish": "Suggested garnish.",
       "backstory": "A fun and creative story about the cocktail."
+        "food_pairing": "Suggested food pairing."
     }}
     """
 
@@ -152,7 +154,7 @@ def recommend_cocktail_by_mood(mood):
         structured_response = json.loads(json_text)
 
         # Validate required fields
-        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory"]
+        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory", "food_pairing"]
         for field in required_fields:
             if field not in structured_response:
                 return {"error": f"Missing field in AI response: {field}"}
