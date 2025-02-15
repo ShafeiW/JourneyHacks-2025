@@ -1,0 +1,14 @@
+{
+    "name": "Sunset Booster",
+    "ingredients": [
+        "2 oz Vodka",
+        "1 oz Red Bull",
+        "4 oz Orange Juice"
+    ],
+    "preparation": "In a shaker, combine 2 oz of Vodka, 1 oz of Red Bull, and 4 oz of Orange Juice. Add ice and shake well. Strain into a highball glass filled with ice.",
+    "glassware": "Highball glass",
+    "garnish": "Orange slice",
+    "backstory": "Inspired by a summer sunset.",
+    "food_pairing": "Pairs well with grilled seafood.",
+    "image": "images/orange.png"
+}
