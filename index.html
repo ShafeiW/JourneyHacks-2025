@@ -3,99 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>miXologist 🍸</title>
+    <title>miXologist 🍸 - Menu</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Raleway', sans-serif;
             text-align: center;
-            padding: 20px;
-            background-color: #f8f8f8;
+            background: #FAEBD7;
+            margin: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 50px;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #F4E1C1;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            margin-right: 30px;
+        }
+        .navbar a:hover {
+            color: #A0522D;
+        }
+        .logo-container {
+            margin-left: 20px;
+        }
+        .logo {
+            width: 220px;
+            display: block;
         }
         .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: auto;
+            background: #5A3E36;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            max-width: 650px;
+            width: 100%;
+            color: #FAEBD7;
+            text-align: center;
+            margin-top: 100px;
         }
         label {
             font-weight: bold;
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             text-align: left;
+            font-size: 18px;
         }
-        input, select {
-            width: 100%;
-            padding: 8px;
+        input, select, button {
+            width: 100%; /* Ensures uniform width */
+            padding: 16px;
             margin-top: 5px;
-            font-size: 16px;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            background: #F4E1C1;
+            color: #5A3E36;
+            display: block;
+            box-sizing: border-box; /* Prevents padding from affecting width */
         }
         button {
-            background: #4CAF50;
+            background: #D2691E;
             color: white;
-            padding: 12px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background 0.3s ease-in-out;
+            margin-top: 20px;
+            transition: background 0.3s;
+            font-weight: bold;
         }
         button:hover {
-            background: #45a049;
-        }
-        button:disabled {
-            background: gray;
-            cursor: not-allowed;
+            background: #A0522D;
         }
         .response {
-            background: #ffffff;
-            padding: 15px;
+            background: #FAEBD7;
+            padding: 20px;
             border-radius: 8px;
-            margin-top: 15px;
+            margin-top: 40px;
             text-align: left;
-            font-family: "Arial", sans-serif;
+            font-family: "Raleway", sans-serif;
             white-space: normal;
-            line-height: 1.5;
+            line-height: 1.6;
             display: none;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            margin-bottom: 8px;
-            font-size: 22px;
+            box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+            color: #5A3E36;
+            font-size: 18px;
             font-weight: bold;
-        }
-        p {
-            margin: 5px 0;
-        }
-        ul {
-            padding-left: 20px;
-            margin: 5px 0;
-        }
-        strong {
-            display: inline-block;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
+            width: calc(100% - 40px); /* Matches input width */
+            max-width: 650px; /* Prevents it from stretching too wide */
+            min-height: 150px; /* Ensures visibility */
+            overflow-y: auto;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box; /* Prevents padding from affecting width */
         }
     </style>
 </head>
 <body>
-
-    <h1>miXologist 🍸</h1>
-    <a href="recommendation.html">
-        <button>Recommendation Page</button>
-    </a>
-
+    <div class="navbar">
+        <a href="landingpage.html" class="logo-container">
+            <img src="assets/mixologist.png" alt="miXologist Logo" class="logo">
+        </a>
+        <div>
+            <a href="landingpage.html">menu</a>
+            <a href="recommendation.html">moods</a>
+        </div>
+    </div>
+    
     <div class="container">
         <label for="ingredients">Ingredients (comma separated):</label>
         <input type="text" id="ingredients" placeholder="e.g., Vodka, Orange Juice, Lime">
@@ -144,31 +173,23 @@
                 });
 
                 const data = await response.json();
+                responseBox.innerHTML = `
+                    <h2>${data.recipe.name} 🍸</h2>
+                    <p><strong>Glassware:</strong> ${data.recipe.glassware}</p>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul>${data.recipe.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
+                    <p><strong>Preparation:</strong> ${data.recipe.preparation}</p>
+                    <p><strong>Garnish:</strong> ${data.recipe.garnish}</p>
+                    <p><strong>Backstory:</strong> ${data.recipe.backstory}</p>
+                `.trim();
 
-                if (data.error) {
-                    responseBox.innerHTML = `<p class="error">${data.error}</p>`;
-                } else {
-                    responseBox.innerHTML = `
-                        <h2>${data.recipe.name} 🍸</h2>
-                        <p><strong>Glassware:</strong> ${data.recipe.glassware}</p>
-                        
-                        <p><strong>Ingredients:</strong></p>
-                        <ul>${data.recipe.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
-                        
-                        <p><strong>Preparation:</strong> ${data.recipe.preparation}</p>
-                        
-                        <p><strong>Garnish:</strong> ${data.recipe.garnish}</p>
-                        
-                        <p><strong>Backstory:</strong> ${data.recipe.backstory}</p>
-                    `.trim();
-                }
+                responseBox.scrollIntoView({ behavior: "smooth", block: "start" });
+
             } catch (error) {
                 responseBox.innerHTML = `<p class="error">Failed to connect to API. Ensure Flask is running.</p>`;
             }
-
             generateBtn.disabled = false;
         }
     </script>
-
 </body>
 </html>
