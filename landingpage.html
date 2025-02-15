@@ -12,13 +12,13 @@
             margin: 0;
             height: 100vh;
             display: flex;
-            background: #F4E1C1; /* Updated background */
+            background: #F4E1C1;
             color: #5A3E36;
             overflow: hidden;
         }
-        /* Smaller Sidebar */
+        /* Sidebar */
         .sidebar {
-            width: 120px; /* Made smaller */
+            width: 120px;
             background: #cf6801;
             height: 100vh;
             flex-shrink: 0;
@@ -27,7 +27,7 @@
         .navbar {
             position: absolute;
             top: 0;
-            left: 120px; /* Adjusted for new sidebar size */
+            left: 120px;
             width: calc(100% - 120px);
             background: #F4E1C1;
             padding: 20px;
@@ -54,50 +54,44 @@
             width: 220px;
             display: block;
         }
-        /* Larger Background Image */
+        /* Background Image (Moved Slightly to the Left) */
         .background-image {
             position: absolute;
-            top: -50px; /* Adjusted for visual layering */
-            left: 120px;
-            width: calc(100% - 120px);
-            height: 95vh; /* Increased size */
+            top: 80px;
+            left: 90px; /* Moved left slightly */
+            width: calc(100% - 90px);
+            height: 100vh;
             background: url('assets/thumbnail.png') no-repeat center center;
-            background-size: cover; /* Larger appearance */
+            background-size: cover;
             z-index: 5;
         }
-        /* Content Layout */
+        /* Floating Text & Button */
         .content {
             position: absolute;
-            top: 65%; /* Lowered position */
-            left: 140px;
+            top: 68%; /* Ensures placement over brown blur */
+            margin-top: 30px;
+            left: 160px;
             transform: translateY(-50%);
             z-index: 6;
-        }
-        /* Improved Description Box */
-        .description-box {
-            background: rgba(255, 255, 255, 0.85);
-            padding: 25px 30px;
-            border-radius: 12px;
-            max-width: 420px;
-            text-align: center;
-            font-size: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-        }
-        .description-box p {
-            margin: 0;
-            font-weight: 500;
+            text-align: left;
+            color: #000000; /* Updated text color */
+            font-size: 24px; /* Slightly smaller font size */
+            font-weight: bold;
+            width: 100%;
         }
         .button-container {
-            margin-top: 25px;
+            margin-top: 10px; /* Adjusted margin for better alignment */
+            margin-left: 250px; /* Moves button more to the right */
+            text-align: left;
         }
         .start-button {
             background: #A63E2E;
             color: white;
-            padding: 14px 24px;
+            padding: 18px 28px; /* Increased button size */
             border: none;
-            font-size: 18px;
+            font-size: 22px; /* Bigger button text */
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s ease;
             text-decoration: none;
@@ -126,11 +120,9 @@
     <div class="background-image"></div>
 
     <div class="content">
-        <div class="description-box">
-            <p>A cocktail generator to elevate your tastebud & simplify the process!</p>
-            <div class="button-container">
-                <a href="index.html" class="start-button">Start Mixing</a>
-            </div>
+        <p>A cocktail generator to elevate your tastebud & simplify the process!</p>
+        <div class="button-container">
+            <a href="index.html" class="start-button">Start Mixing</a>
         </div>
     </div>
 
