@@ -185,6 +185,28 @@
 
                 responseBox.scrollIntoView({ behavior: "smooth", block: "start" });
 
+<<<<<<< HEAD
+=======
+                if (data.error) {
+                    responseBox.innerHTML = `<p class="error">${data.error}</p>`;
+                } else {
+                    responseBox.innerHTML = `
+                        <h2>${data.recipe.name} 🍸</h2>
+                        <p><strong>Glassware:</strong> ${data.recipe.glassware}</p>
+                        
+                        <p><strong>Ingredients:</strong></p>
+                        <ul>${data.recipe.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
+                        
+                        <p><strong>Preparation:</strong> ${data.recipe.preparation}</p>
+                        
+                        <p><strong>Garnish:</strong> ${data.recipe.garnish}</p>
+                        
+                        <p><strong>Backstory:</strong> ${data.recipe.backstory}</p>
+
+                        <p><strong>Food Pairing:</strong> ${data.recipe.food_pairing}</p>
+                    `.trim();
+                }
+>>>>>>> c1b3aefaab9a584cf08aa104ae0c76ef88b6502d
             } catch (error) {
                 responseBox.innerHTML = `<p class="error">Failed to connect to API. Ensure Flask is running.</p>`;
             }
