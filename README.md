@@ -22,7 +22,7 @@ miXologist is an interactive cocktail recommendation web application that allows
 ### Steps to Run the Project
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/mixologist.git
+   git clone https://github.com/ShafeiW/JourneyHacks-2025.git
    cd mixologist
    ```
 2. Install dependencies:
@@ -54,9 +54,5 @@ miXologist/
 - Expand ingredient substitution database
 - Add animations and transitions for smoother UI interactions
 
-## Contributors
-- **[Your Name]** - Developer & Designer
 
-## License
-This project is licensed under the MIT License - see the `LICENSE` file for details.
 
