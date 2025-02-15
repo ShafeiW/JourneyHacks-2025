@@ -130,7 +130,7 @@
         <label for="mood">Enter Your Mood:</label>
         <input type="text" id="mood" placeholder="e.g., Happy, Relaxed, Excited">
 
-        <button id="generateBtn" onclick="getCocktail()">Get Cocktail Recommendation</button>
+        <button id="generateBtn" onclick="getCocktail()">Generate Cocktail</button>
 
         <div id="responseBox" class="response"></div>
     </div>
@@ -161,6 +161,7 @@
                 } else {
                     responseBox.innerHTML = `
                         <h2>${data.cocktail.name} 🍸</h2>
+                        <p><a href="${data.cocktail.image}" target="_blank"><img src="${data.cocktail.image}" alt="${data.cocktail.name}" style="max-width: 100%; border-radius: 8px;"></a></p>
                         <p><strong>Glassware:</strong> ${data.cocktail.glassware}</p>
                         <p><strong>Ingredients:</strong></p>
                         <ul>${data.cocktail.ingredients.map(ing => `<li>${ing}</li>`).join("")}</ul>
