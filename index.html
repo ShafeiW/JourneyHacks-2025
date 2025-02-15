@@ -150,6 +150,7 @@
                 } else {
                     responseBox.innerHTML = `
                         <h2>${data.recipe.name} 🍸</h2>
+                        <p><img src="${data.recipe.image}" alt="${data.recipe.name}" style="max-width: 100%; margin-top: 10px;"></p>
                         <p><strong>Glassware:</strong> ${data.recipe.glassware}</p>
                         
                         <p><strong>Ingredients:</strong></p>
@@ -162,6 +163,8 @@
                         <p><strong>Backstory:</strong> ${data.recipe.backstory}</p>
 
                         <p><strong>Food Pairing:</strong> ${data.recipe.food_pairing}</p>
+
+                        
                     `.trim();
                 }
             } catch (error) {

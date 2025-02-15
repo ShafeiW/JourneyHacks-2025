@@ -38,7 +38,8 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
     """
     prompt = f"""
     You are a professional mixologist. Based on the provided inputs, create a unique cocktail recipe. DO NOT add any addition ingredients (except water or ice if needed). Only use the provided ingredients.
-    
+    For image, use "images/colour.png", where colour is the best fit colour of the cocktail based on the ingredients. you have 6 choices for colour: blue, brown, pink, red, clear, orange.
+
     **Inputs:**
     - Ingredients: {', '.join(ingredients)}
     - Drink Style: {drink_preference}
@@ -53,6 +54,7 @@ def generate_cocktail(ingredients, drink_preference, flavor_preference):
       "garnish": "Orange slice",
       "backstory": "Inspired by a summer sunset."
       "food_pairing": "Pairs well with grilled seafood."
+      "image": "images/colour.png"
     }}
     """
 
@@ -154,7 +156,7 @@ def recommend_cocktail_by_mood(mood):
         structured_response = json.loads(json_text)
 
         # Validate required fields
-        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory", "food_pairing"]
+        required_fields = ["name", "ingredients", "preparation", "glassware", "garnish", "backstory", "food_pairing", "image"]
         for field in required_fields:
             if field not in structured_response:
                 return {"error": f"Missing field in AI response: {field}"}
